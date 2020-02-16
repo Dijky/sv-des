@@ -12,11 +12,18 @@
 ##	VIVADO
 ###########################################################################
 #########
+#Generated simulation files
+#########
+DES.sim/*
+#########
 #Source files:
 #########
 #Do NOT ignore VHDL, Verilog, block diagrams or EDIF files.
 !*.vhd
 !*.v
+!*.vh
+!*.sv
+!*.svh
 !*.bd
 !*.edif
 #########

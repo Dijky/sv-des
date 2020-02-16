@@ -19,6 +19,8 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`include "DESTypes.svh"
+
 module DESLeftRots(
     output [0:15] cnt
 );
@@ -53,15 +55,15 @@ assign out[0:27] = two ? {in[2:27], in[0:1]} : {in[1:27], in[0]};
 endmodule
 
 module DESKeyRound(
-    input [0:55] in,
+    input des_key_state in,
     input [0:3] round,
-    output [0:55] out,
-    output [0:47] rkey
+    output des_key_state out,
+    output des_round_key rkey
 );
 
-wire [0:15] rot_tab;
-wire rot_cnt;
-wire [0:55] rot_state;
+logic [0:15] rot_tab;
+logic rot_cnt;
+des_key_state rot_state;
 
 DESLeftRots rot_table(rot_tab);
 assign rot_cnt = rot_tab[round];

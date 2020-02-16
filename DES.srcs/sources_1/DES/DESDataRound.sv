@@ -19,23 +19,19 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`include "DESTypes.svh"
 
 module DESDataRound(
-    input [0:63] data_in,
-    input [0:47] rkey_in,
-    output [0:63] data_out
+    input des_block data_in,
+    input des_round_key rkey_in,
+    output des_block data_out
 );
 
-wire [0:31] hblk_in_left = data_in[0:31];
-wire [0:31] hblk_in_right = data_in[32:63];
-wire [0:31] hblk_out_left = hblk_in_right;
-wire [0:31] hblk_out_right;
+des_hblk feistel_out;
 
-wire [0:31] feistel_out;
+DESFeistel feistel(.hblk_in(data_in.hblk[1]), .rkey_in(rkey_in), .hblk_out(feistel_out));
 
-DESFeistel feistel(.hblk_in(hblk_in_right), .rkey_in(rkey_in), .hblk_out(feistel_out));
-assign hblk_out_right = hblk_in_left ^ feistel_out;
-
-assign data_out = { hblk_out_left, hblk_out_right };
+assign data_out.hblk[0] = data_in.hblk[1];
+assign data_out.hblk[1] = data_in.hblk[0] ^ feistel_out;
 
 endmodule

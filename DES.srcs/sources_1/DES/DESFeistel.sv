@@ -19,16 +19,17 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`include "DESTypes.svh"
 
 module DESFeistel(
-    input [31:0] hblk_in,
-    input [47:0] rkey_in,
-    output [31:0] hblk_out
+    input des_hblk hblk_in,
+    input des_round_key rkey_in,
+    output des_hblk hblk_out
 );
 
-wire [0:47] hblk_expanded;
-wire [0:47] hblk_xor_rkey;
-wire [0:31] sbox_out;
+des_hblk_expanded hblk_expanded;
+des_hblk_expanded hblk_xor_rkey;
+des_hblk sbox_out;
 
 DESExpansion expand(.in(hblk_in), .out(hblk_expanded));
 assign hblk_xor_rkey = hblk_expanded ^ rkey_in;

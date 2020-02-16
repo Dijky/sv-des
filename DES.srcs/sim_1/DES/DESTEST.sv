@@ -26,7 +26,7 @@
 
 module DESTEST();
 
-reg clk = 0;
+reg clk = 1;
 integer clk_cnt = 0;
 reg rst = 0;
 reg valid = 0;
@@ -65,32 +65,30 @@ wire valid_out;
 
 DES#(16) des(clk, rst, data_in, key_in, valid, data_out, valid_out);
 
-assign CORRECT = !valid_out | data_out == data_ou;
+assign data_ou = (clk_cnt >= 16 & clk_cnt < `DES_TEST_ROWS + 16) ? test_rows[clk_cnt-16].cipher : 0;
+assign CORRECT = valid_out == 0 | data_out == data_ou;
 
 initial begin
     $monitor($time, , CORRECT);
-    rst = 1;
+end
+
+always @(negedge clk) begin
+    if (clk_cnt < `DES_TEST_ROWS) begin
+        data_in = test_rows[clk_cnt].plain;
+        key_in = test_rows[clk_cnt].key;
+    end
 end
 
 always @(posedge clk) begin
     $display("%t    %d %d    %b", $time, CORRECT, valid_out, data_out);
-    if (clk_cnt < `DES_TEST_ROWS) begin
-        data_in = test_rows[clk_cnt].plain;
-        key_in = test_rows[clk_cnt].key;
-        valid = 1;
-    end else begin
-    valid = 0;
-    end
+    valid = clk_cnt < `DES_TEST_ROWS;
     if (clk_cnt >= 16 & clk_cnt < `DES_TEST_ROWS + 16) begin
         // Set test vector output for comparison
         // Delayed by 16 cycles    
-        data_ou = test_rows[clk_cnt-16].cipher;
+        // data_ou = test_rows[clk_cnt-16].cipher;
     end
     if (clk_cnt >= `DES_TEST_ROWS + 16 + 10) $finish;
     clk_cnt = clk_cnt + 1;
-    if (clk_cnt > 1) begin
-        rst = 0;
-    end
 end
 
 always #5 clk = !clk;

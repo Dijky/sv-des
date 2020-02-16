@@ -57,6 +57,7 @@ round_data state [0:STAGES-1]; // Inputs to stages
 wire round_data next [0:STAGES-1]; // Outputs from stages
 
 for(stage = 0; stage < STAGES; stage = stage + 1) begin
+    initial state[stage] = 0;
     wire des_round_key rkey; // From key_round to data_round
     DESKeyRound key_round(.in(state[stage].key_state), .round(stage[3:0]), .out(next[stage].key_state), .rkey(rkey));
     DESDataRound data_round(.data_in(state[stage].data), .rkey_in(rkey), .data_out(next[stage].data));
@@ -76,8 +77,9 @@ assign data_pre_fp.hblk[1] = next[STAGES-1].data.hblk[0];
 always@(posedge clk) begin
     // Set module input as input to stage 0
     state[0].valid = valid_in;
-    state[0].data = data_ip; // From Initial Permutation
-    state[0].key_state = key_state_pc1; // Prom Permutation Choice 1
+    // Skip input from module if it's not valid
+    state[0].data = valid_in ? data_ip : 0; // From Initial Permutation
+    state[0].key_state = valid_in ?key_state_pc1 : 0; // Prom Permutation Choice 1
     
     if (rst == 1) begin
         // Reset all stages

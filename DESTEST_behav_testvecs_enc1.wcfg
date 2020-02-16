@@ -6,20 +6,19 @@
       <db_ref path="DESTEST_behav.wdb" id="1">
          <top_modules>
             <top_module name="DESTEST" />
-            <top_module name="\$unit_DESDataRound_sv " />
-            <top_module name="\$unit_DESTEST_sv " />
+            <top_module name="\$unit_DES_sv " />
             <top_module name="glbl" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="3175000001fs"></ZoomEndTime>
-      <Cursor1Time time="1000000000fs"></Cursor1Time>
+      <ZoomEndTime time="2620000001fs"></ZoomEndTime>
+      <Cursor1Time time="2620000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="202"></NameColumnWidth>
-      <ValueColumnWidth column_width="129"></ValueColumnWidth>
+      <ValueColumnWidth column_width="125"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="4" />
    <wvobject fp_name="group86" type="group">

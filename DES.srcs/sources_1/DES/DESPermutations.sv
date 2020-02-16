@@ -19,9 +19,11 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`include "DESTypes.svh"
+
 module DESIP(
-    input [0:63] in,
-    output [0:63] out
+    input des_fblk in,
+    output des_fblk out
 );
 
 // Generated permutation
@@ -93,8 +95,8 @@ assign out[63] = in[6];
 endmodule
 
 module DESFP(
-    input [0:63] in,
-    output [0:63] out
+    input des_fblk in,
+    output des_fblk out
 );
 
 assign out[0] = in[39];
@@ -165,8 +167,8 @@ assign out[63] = in[24];
 endmodule
 
 module DESExpansion(
-    input  [0:31] in,
-    output [0:47] out
+    input  des_hblk in,
+    output des_hblk_expanded out
 );
 
 // Generated permutation
@@ -222,8 +224,8 @@ assign out[47] = in[0];
 endmodule
 
 module DESPermutation(
-    input [0:31] in,
-    output [0:31] out
+    input des_hblk in,
+    output des_hblk out
 );
 
 // Generated permutation
@@ -263,8 +265,8 @@ assign out[31] = in[24];
 endmodule
 
 module DESPC1(
-    input [0:63] key_in,
-    output [0:55] key_out
+    input des_key key_in,
+    output des_key_state key_out
 );
 
 // Generated permutation
@@ -328,8 +330,8 @@ assign key_out[55] = key_in[3];
 endmodule
 
 module DESPC2(
-    input [0:55] state,
-    output [0:47] key_out
+    input des_key_state state,
+    output des_round_key key_out
 );
 
 // Generated permutation

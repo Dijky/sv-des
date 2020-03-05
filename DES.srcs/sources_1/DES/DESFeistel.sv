@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Lukas Schmalen <git@dijky.me>
 // 
 // Create Date: 12.02.2020 11:25:04
 // Design Name: 

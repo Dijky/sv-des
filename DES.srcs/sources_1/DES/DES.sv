@@ -22,7 +22,7 @@
 `include "DESTypes.svh"
 
 module DES#(
-    parameter integer STAGES = 1
+    parameter integer STAGES = 16
 )(
     input clk,
     input rst,
@@ -33,7 +33,7 @@ module DES#(
     output valid_out
 );
 initial begin
-    assert_STAGES: assert(STAGES == 16 | STAGES == 1);
+    assert_STAGES: assert(STAGES == 16);
 end
 genvar stage;
 
